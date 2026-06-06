@@ -1,4 +1,4 @@
-// Controller Task (todo) — daftar, simpan, hapus.
+// Controller Task (todo).
 
 fungsi task_index(): teks {
     biar item: []teks = tugas_semua();
@@ -10,7 +10,7 @@ fungsi task_index(): teks {
     kalau panjangTeks(daftar) == 0 {
         daftar = "<li><em>Belum ada tugas.</em></li>";
     }
-    kembali jala_tampil_tata("layout", "task", peta{
+    kembali jala_tampil_tata("Layout", "Task", peta{
         "judul": "Daftar Tugas",
         "daftar": daftar,
         "galat": jala_galat_pesan("judul")

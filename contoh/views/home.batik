@@ -1,2 +1,2 @@
 <p>{{pesan}}</p>
-<p>Buka <a href="/tugas">Daftar Tugas</a> untuk mencoba alur MVC: rute &rarr; controller &rarr; model &rarr; view.</p>
+<p>Coba <a href="/tugas">Daftar Tugas</a> (todo): rute &rarr; controller &rarr; model &rarr; view + validasi.</p>

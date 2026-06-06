@@ -1,7 +1,7 @@
 // Tampilan (View) — memakai template engine Batik (modul "tampilan").
 // Berkas view berformat .batik di folder tampilan/.
 
-biar jala_dir_tampilan: teks = "views";
+biar jala_dir_tampilan: teks = "Views";
 
 // Ubah folder tampilan (default "tampilan").
 fungsi jala_atur_tampilan(dir: teks): kosong {

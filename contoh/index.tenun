@@ -1,0 +1,17 @@
+// Titik masuk aplikasi. Jalankan: tenun   (atau: tenun index.tenun)
+impor "jala";
+
+impor "./App/Config.tenun";
+impor "./App/Models/Task.tenun";
+impor "./App/Controllers/Home.tenun";
+impor "./App/Controllers/Task.tenun";
+impor "./Routes.tenun";
+
+jala_statik("Public");
+
+fungsi tangani(metode: teks, jalur: teks, badan: teks): teks {
+    kembali jala_tangani(metode, jalur, badan);
+}
+
+cetak("Jala jalan di http://localhost:8080");
+jala_layani(8080);

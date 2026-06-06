@@ -1,0 +1,165 @@
+// CLI Jala — scaffold & generator, ditulis dengan Tenun (pakai builtin berkas).
+//
+// Proyek baru:
+//   tenun add jala
+//   tenun tenun_modul/jala/cli/jala.tenun baru Blog
+//
+// Di dalam proyek (lewat berkas "nakhoda.tenun" yang ikut ter-scaffold):
+//   tenun nakhoda.tenun controller Produk
+//   tenun nakhoda.tenun model Produk
+//   tenun nakhoda.tenun view Produk
+
+// ---- util tulis berkas (buat folder induk dulu) ----
+
+fungsi _induk(path: teks): teks {
+    biar idx: bulat = 0 - 1;
+    biar i: bulat = 0;
+    selama i < panjangTeks(path) {
+        kalau potong(path, i, 1) == "/" { idx = i; }
+        i = i + 1;
+    }
+    kalau idx < 0 { kembali ""; }
+    kembali potong(path, 0, idx);
+}
+
+fungsi _tulis(path: teks, isi: teks): kosong {
+    kalau adaFile(path) {
+        cetak("  lewati (sudah ada): " + path);
+    } lain {
+        biar d: teks = _induk(path);
+        kalau panjangTeks(d) > 0 { buatDir(d); }
+        tulisFile(path, isi);
+        cetak("  dibuat: " + path);
+    }
+}
+
+// ---- template generator ----
+
+fungsi t_controller(nama: teks): teks {
+    kembali "// Controller " + nama + ".\n\n" +
+        "fungsi " + nama + "_index(): teks {\n" +
+        "    kembali jala_tampil_tata(\"Layout\", \"" + nama + "\", peta{ \"judul\": \"" + nama + "\" });\n" +
+        "}\n";
+}
+
+fungsi t_model(nama: teks): teks {
+    kembali "// Model " + nama + ". Pakai modul \"orm\" untuk DB, atau simpan/muat.\n\n" +
+        "fungsi " + nama + "_semua(): []teks {\n" +
+        "    biar data: teks = muat(\"" + nama + "\");\n" +
+        "    kalau panjangTeks(data) == 0 { kembali []; }\n" +
+        "    kembali pisah(data, \"\\n\");\n" +
+        "}\n";
+}
+
+fungsi t_view(nama: teks): teks {
+    kembali "<h2>{{judul}}</h2>\n<p>View " + nama + ".</p>\n";
+}
+
+// ---- scaffold proyek baru ----
+
+fungsi buat_proyek(nama: teks): kosong {
+    cetak("[jala] membuat proyek '" + nama + "'");
+    biar p: teks = nama + "/";
+
+    _tulis(p + "tenun.json",
+        "{\n" +
+        "  \"nama\": \"" + nama + "\",\n" +
+        "  \"versi\": \"0.1.0\",\n" +
+        "  \"berkas\": \"index.tenun\",\n" +
+        "  \"butuh\": { \"jala\": \"^0.2.0\" }\n" +
+        "}\n");
+
+    _tulis(p + "index.tenun",
+        "// Titik masuk aplikasi. Jalankan: tenun   (atau: tenun index.tenun)\n" +
+        "impor \"jala\";\n\n" +
+        "impor \"./App/Config.tenun\";\n" +
+        "impor \"./App/Controllers/Home.tenun\";\n" +
+        "impor \"./Routes.tenun\";\n\n" +
+        "jala_statik(\"Public\");\n\n" +
+        "fungsi tangani(metode: teks, jalur: teks, badan: teks): teks {\n" +
+        "    kembali jala_tangani(metode, jalur, badan);\n" +
+        "}\n\n" +
+        "cetak(\"Jala jalan di http://localhost:8080\");\n" +
+        "jala_layani(8080);\n");
+
+    _tulis(p + "nakhoda.tenun",
+        "// Artisan-nya Jala: generator berkas.\n" +
+        "//   tenun nakhoda.tenun controller Produk\n" +
+        "//   tenun nakhoda.tenun model Produk\n" +
+        "//   tenun nakhoda.tenun view Produk\n" +
+        "impor \"./tenun_modul/jala/cli/jala.tenun\";\n");
+
+    _tulis(p + "Routes.tenun",
+        "// Definisi rute. Pola -> fungsi controller.\n" +
+        "jala_get(\"/\", home_index);\n" +
+        "jala_get(\"/about\", home_about);\n");
+
+    _tulis(p + "App/Config.tenun",
+        "// Konfigurasi aplikasi.\n" +
+        "jala_atur(\"nama_app\", \"Aplikasi Jala\");\n");
+
+    _tulis(p + "App/Controllers/Home.tenun",
+        "// Controller Home.\n\n" +
+        "fungsi home_index(): teks {\n" +
+        "    kembali jala_tampil_tata(\"Layout\", \"Home\", peta{\n" +
+        "        \"judul\": \"Beranda\",\n" +
+        "        \"pesan\": \"Halo dari Jala! Edit App/Controllers/Home.tenun dan Views/Home.batik.\"\n" +
+        "    });\n" +
+        "}\n\n" +
+        "fungsi home_about(): teks {\n" +
+        "    kembali jala_tampil_tata(\"Layout\", \"About\", peta{ \"judul\": \"Tentang\" });\n" +
+        "}\n");
+
+    _tulis(p + "App/Models/Example.tenun",
+        "// Contoh model. Ganti ke modul \"orm\" untuk basis data.\n");
+
+    _tulis(p + "Views/Layout.batik",
+        "<!doctype html>\n<html lang=\"id\">\n<head>\n" +
+        "  <meta charset=\"utf-8\">\n" +
+        "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+        "  <title>{{judul}}</title>\n" +
+        "  <link rel=\"stylesheet\" href=\"/style.css\">\n" +
+        "</head>\n<body>\n" +
+        "  {{> Partials/Header}}\n" +
+        "  <main>{{konten}}</main>\n" +
+        "  <footer>Dibuat dengan <strong>Jala</strong>.</footer>\n" +
+        "</body>\n</html>\n");
+
+    _tulis(p + "Views/Home.batik", "<p>{{pesan}}</p>\n");
+    _tulis(p + "Views/About.batik",
+        "<p>Aplikasi ini dibuat dengan kerangka <strong>Jala</strong> (MVC).</p>\n");
+
+    _tulis(p + "Views/Partials/Header.batik",
+        "<header>\n  <h1>{{judul}}</h1>\n" +
+        "  <nav><a href=\"/\">Beranda</a> &middot; <a href=\"/about\">Tentang</a></nav>\n" +
+        "</header>\n");
+
+    _tulis(p + "Public/style.css",
+        "* { box-sizing: border-box; }\n" +
+        "body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }\n" +
+        "nav a { color: #0a7; text-decoration: none; }\n" +
+        "footer { margin-top: 2rem; color: #888; font-size: .85rem; }\n");
+
+    _tulis(p + ".gitignore", "tenun_modul/\ntenun_data.json\n");
+
+    cetak("[jala] selesai. Langkah berikut:");
+    cetak("  cd " + nama);
+    cetak("  tenun add jala");
+    cetak("  tenun            (jalankan index.tenun -> http://localhost:8080)");
+}
+
+// ---- dispatch ----
+
+biar arg: []teks = argumen();
+kalau panjang(arg) < 2 {
+    cetak("Pakai: <perintah> <Nama>");
+    cetak("  perintah: baru | controller | model | view");
+    cetak("Contoh: tenun tenun_modul/jala/cli/jala.tenun baru Blog");
+} lain {
+    biar cmd: teks = arg[0];
+    biar nama: teks = arg[1];
+    kalau cmd == "baru" { buat_proyek(nama); }
+    kalau cmd == "controller" { _tulis("App/Controllers/" + nama + ".tenun", t_controller(nama)); }
+    kalau cmd == "model" { _tulis("App/Models/" + nama + ".tenun", t_model(nama)); }
+    kalau cmd == "view" { _tulis("Views/" + nama + ".batik", t_view(nama)); }
+}

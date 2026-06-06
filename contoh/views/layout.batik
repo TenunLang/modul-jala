@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  {{> partials/header}}
+  {{> Partials/Header}}
   <main>{{konten}}</main>
-  <footer>Dibuat dengan <strong>Jala</strong> &mdash; kerangka web MVC Tenun.</footer>
+  <footer>Dibuat dengan <strong>Jala</strong>.</footer>
 </body>
 </html>

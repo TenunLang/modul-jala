@@ -1,0 +1,6 @@
+{
+  "nama": "contoh",
+  "versi": "0.1.0",
+  "berkas": "index.tenun",
+  "butuh": { "jala": "^0.2.0" }
+}

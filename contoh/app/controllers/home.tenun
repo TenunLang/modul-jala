@@ -1,8 +1,12 @@
 // Controller Home.
 
 fungsi home_index(): teks {
-    kembali jala_tampil_tata("layout", "home", peta{
-        "judul": "Selamat Datang",
-        "pesan": "Aplikasi contoh todo dengan kerangka Jala (MVC)."
+    kembali jala_tampil_tata("Layout", "Home", peta{
+        "judul": "Beranda",
+        "pesan": "Halo dari Jala! Edit App/Controllers/Home.tenun dan Views/Home.batik."
     });
+}
+
+fungsi home_about(): teks {
+    kembali jala_tampil_tata("Layout", "About", peta{ "judul": "Tentang" });
 }

@@ -1,0 +1,5 @@
+// Artisan-nya Jala: generator berkas.
+//   tenun nakhoda.tenun controller Produk
+//   tenun nakhoda.tenun model Produk
+//   tenun nakhoda.tenun view Produk
+impor "./tenun_modul/jala/cli/jala.tenun";
