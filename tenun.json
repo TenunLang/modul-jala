@@ -1,13 +1,14 @@
 {
   "nama": "jala",
-  "versi": "0.1.0",
-  "deskripsi": "Kerangka kerja web MVC untuk Tenun: Rute -> Kontroler -> Model -> Tampilan. Rasa Laravel/CodeIgniter, istilah Indonesia, ramah pemula.",
+  "versi": "0.2.0",
+  "deskripsi": "Kerangka kerja web MVC untuk Tenun: Rute -> Controller -> Model -> View (Batik). Generator, auth guard + CSRF. Rasa Laravel/CodeIgniter, istilah Indonesia, ramah pemula.",
   "lisensi": "MIT",
   "penulis": "TenunLang",
   "berkas": "src/jala.tenun",
   "kataKunci": ["web", "framework", "mvc", "kerangka", "rute", "kontroler", "tampilan", "laravel", "codeigniter"],
   "butuh": {
     "web": "^0.1.0",
-    "tampilan": "^0.1.0"
+    "tampilan": "^0.2.0",
+    "auth": "^0.2.0"
   }
 }

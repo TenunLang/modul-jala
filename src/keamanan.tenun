@@ -1,0 +1,47 @@
+// Keamanan — penjaga autentikasi (JWT) & proteksi CSRF.
+// Memakai modul "auth" (JWT/token) dan penyimpanan kunci-nilai bawaan.
+
+// ---- Autentikasi (JWT Bearer) ----
+
+// True bila request membawa token Bearer valid (tanda tangan + belum kedaluwarsa).
+fungsi jala_terautentikasi(rahasia: teks): bool {
+    kembali auth_cek(auth_bearer(), rahasia);
+}
+
+// Penjaga: bila tidak terautentikasi, set status 401 dan kembalikan salah.
+// Pakai di awal controller:  kalau jala_wajib_masuk(rahasia) == salah { kembali ""; }
+fungsi jala_wajib_masuk(rahasia: teks): bool {
+    kalau jala_terautentikasi(rahasia) == salah {
+        jala_status(401);
+        kembali salah;
+    }
+    kembali benar;
+}
+
+// Subjek (id pengguna) dari token Bearer. Verifikasi dulu dengan jala_wajib_masuk.
+fungsi jala_pengguna(): teks {
+    kembali auth_subjek(auth_bearer());
+}
+
+// ---- CSRF ----
+
+// Buat & simpan token CSRF untuk sesi `id`. Sisipkan ke form sebagai _csrf.
+fungsi jala_csrf_baru(id: teks): teks {
+    biar t: teks = auth_token_acak(16);
+    simpan("csrf:" + id, t);
+    kembali t;
+}
+
+// Field input tersembunyi berisi token CSRF (untuk ditaruh di <form>).
+fungsi jala_csrf_field(id: teks): teks {
+    kembali "<input type=\"hidden\" name=\"_csrf\" value=\"" + jala_csrf_baru(id) + "\">";
+}
+
+// Verifikasi token CSRF dari form (_csrf) terhadap yang tersimpan untuk sesi `id`.
+fungsi jala_csrf_cek(id: teks): bool {
+    biar simpan_tok: teks = muat("csrf:" + id);
+    kalau panjangTeks(simpan_tok) == 0 {
+        kembali salah;
+    }
+    kembali simpan_tok == jala_input("_csrf");
+}

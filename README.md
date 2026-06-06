@@ -42,6 +42,16 @@ blog/
   tenun.json               (butuh: jala)
 ```
 
+## Generator (ala `artisan make:`)
+
+Tambah berkas ke proyek yang sudah ada:
+
+```
+tenun buat:controller produk   # -> app/controllers/produk.tenun
+tenun buat:model produk        # -> app/models/produk.tenun
+tenun buat:view produk         # -> views/produk.batik
+```
+
 ## Inti
 
 ```tenun
@@ -93,6 +103,24 @@ jala_layani(8080);
 
 ### Konfigurasi (`src/konfig.tenun`)
 - `jala_atur(kunci, nilai)`, `jala_konfig(kunci)`.
+
+### Keamanan (`src/keamanan.tenun`)
+Autentikasi JWT (modul `auth`) + proteksi CSRF.
+
+```tenun
+// Penjaga rute (di awal controller):
+fungsi dashboard(): teks {
+    kalau jala_wajib_masuk("kunci-rahasia") == salah { kembali ""; }   // 401 bila tak login
+    kembali jala_tampil_tata("layout", "dashboard", peta{ "user": jala_pengguna() });
+}
+
+// CSRF: taruh field di form, cek saat POST.
+//   <form ...>{{csrf}}...</form>  (csrf = jala_csrf_field(id))
+kalau jala_csrf_cek(id) == salah { jala_status(403); }
+```
+
+- `jala_terautentikasi(rahasia): bool`, `jala_wajib_masuk(rahasia): bool` (set 401), `jala_pengguna(): teks` (sub token).
+- `jala_csrf_field(id): teks` (input tersembunyi), `jala_csrf_baru(id)`, `jala_csrf_cek(id): bool`.
 
 ## Model
 
