@@ -1,0 +1,45 @@
+// Respons — pembungkus respons + encoder JSON dari peta.
+
+fungsi jala_teks(isi: teks): teks {
+    kembali web_teks(isi);
+}
+fungsi jala_html(isi: teks): teks {
+    kembali web_html(isi);
+}
+fungsi jala_json(isi: teks): teks {
+    kembali web_json(isi);
+}
+fungsi jala_status(kode: bulat): kosong {
+    web_status(kode);
+}
+fungsi jala_redirect(url: teks): teks {
+    kembali web_redirect(url);
+}
+
+// Redirect ke rute bernama.
+fungsi jala_redirect_rute(nama: teks): teks {
+    kembali web_redirect(jala_url(nama));
+}
+
+// Escape nilai untuk JSON (backslash & kutip ganda).
+fungsi jala_lolos_json(t: teks): teks {
+    biar s: teks = ganti(t, "\\", "\\\\");
+    s = ganti(s, "\"", "\\\"");
+    kembali s;
+}
+
+// Encode peta (kunci->nilai teks) menjadi objek JSON.
+fungsi jala_json_peta(m: peta): teks {
+    biar kunci: []teks = petaKunci(m);
+    biar s: teks = "{";
+    untuk i dari 0 sampai panjang(kunci) {
+        kalau i > 0 { s = s + ","; }
+        s = s + "\"" + jala_lolos_json(kunci[i]) + "\":\"" + jala_lolos_json(m[kunci[i]]) + "\"";
+    }
+    kembali s + "}";
+}
+
+// Respons JSON langsung dari peta.
+fungsi jala_json_data(m: peta): teks {
+    kembali web_json(jala_json_peta(m));
+}

@@ -1,0 +1,31 @@
+// Tampilan (View) — memakai template engine Batik (modul "tampilan").
+// Berkas view berformat .batik di folder tampilan/.
+
+biar jala_dir_tampilan: teks = "views";
+
+// Ubah folder tampilan (default "tampilan").
+fungsi jala_atur_tampilan(dir: teks): kosong {
+    jala_dir_tampilan = dir;
+}
+
+// Render satu view: tampilan/<nama>.batik dengan data (peta).
+fungsi jala_tampil(nama: teks, data: peta): teks {
+    kembali web_html(batik(jala_dir_tampilan + "/" + nama + ".batik", data));
+}
+
+// Render view di dalam tata letak (layout memuat {{konten}}).
+//   tampilan/<tata>.batik  +  tampilan/<nama>.batik
+fungsi jala_tampil_tata(tata: teks, nama: teks, data: peta): teks {
+    data["konten"] = batik(jala_dir_tampilan + "/" + nama + ".batik", data);
+    kembali web_html(batik(jala_dir_tampilan + "/" + tata + ".batik", data));
+}
+
+// Render template string langsung (Batik).
+fungsi jala_render(tmpl: teks, data: peta): teks {
+    kembali batik_render(tmpl, data);
+}
+
+// Render & gabung daftar baris (perulangan di view).
+fungsi jala_daftar(itemTmpl: teks, daftar: []peta): teks {
+    kembali batik_daftar(itemTmpl, daftar);
+}

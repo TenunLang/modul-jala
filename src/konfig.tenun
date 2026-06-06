@@ -1,0 +1,14 @@
+// Konfigurasi aplikasi — penyimpanan kunci->nilai global.
+
+biar jala_konfig_data: peta = peta{};
+
+fungsi jala_atur(kunci: teks, nilai: teks): kosong {
+    jala_konfig_data[kunci] = nilai;
+}
+
+fungsi jala_konfig(kunci: teks): teks {
+    kalau petaPunya(jala_konfig_data, kunci) {
+        kembali jala_konfig_data[kunci];
+    }
+    kembali "";
+}

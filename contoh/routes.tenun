@@ -1,0 +1,6 @@
+// Definisi rute. Pola -> fungsi controller.
+jala_get("/", home_index);
+
+jala_get("/tugas", task_index);
+jala_post("/tugas", task_simpan);
+jala_get("/tugas/hapus/:id", task_hapus);

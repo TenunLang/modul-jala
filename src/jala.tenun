@@ -1,0 +1,23 @@
+// Jala — kerangka kerja web MVC untuk Tenun.
+// Nama "jala" = benang dasar pada tenunan: fondasi yang menahan seluruh kain.
+// Begitu pula Jala menahan seluruh aplikasi web-mu.
+//
+// Rasa CodeIgniter/Laravel, istilah Indonesia, ramah pemula. Dibangun di atas
+// modul "web". Pola MVC: Rute -> Kontroler -> (Model) -> Tampilan.
+//
+// Pakai:
+//   impor "jala";
+//   fungsi beranda(): teks { kembali jala_tampil("beranda", peta{ "judul": "Halo" }); }
+//   jala_get("/", beranda);
+//   fungsi tangani(m: teks, j: teks, b: teks): teks { kembali jala_tangani(m, j, b); }
+//   jala_layani(8080);
+
+impor "web";
+impor "tampilan";
+
+impor "./konfig.tenun";
+impor "./rute.tenun";
+impor "./permintaan.tenun";
+impor "./respons.tenun";
+impor "./tampilan.tenun";
+impor "./aplikasi.tenun";

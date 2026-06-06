@@ -1,0 +1,30 @@
+// Aplikasi — bootstrap & siklus permintaan.
+
+// Dispatcher utama. Panggil dari fungsi top-level `tangani`:
+//   fungsi tangani(metode: teks, jalur: teks, badan: teks): teks {
+//       kembali jala_tangani(metode, jalur, badan);
+//   }
+fungsi jala_tangani(metode: teks, jalur: teks, badan: teks): teks {
+    jala_reset_galat();
+    kembali web_tangani(metode, jalur, badan);
+}
+
+// Pasang middleware (fungsi tanpa argumen; kembalikan teks tak kosong untuk hentikan).
+fungsi jala_pakai(mw: fungsi): kosong {
+    web_pakai(mw);
+}
+
+// Sajikan berkas statis dari `dir` (CSS/JS/gambar).
+fungsi jala_statik(dir: teks): kosong {
+    web_statik(dir);
+}
+
+// Aktifkan CORS.
+fungsi jala_cors(origin: teks): kosong {
+    web_cors(origin);
+}
+
+// Jalankan server pada `port`. Butuh fungsi top-level `tangani` terdefinisi.
+fungsi jala_layani(port: bulat): kosong {
+    layani(port);
+}

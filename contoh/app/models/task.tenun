@@ -1,0 +1,36 @@
+// Model Task — disimpan di penyimpanan kunci-nilai bawaan (simpan/muat).
+// Tiap tugas satu baris; daftar dipisah newline. (Ganti ke modul "orm" untuk DB.)
+
+fungsi tugas_semua(): []teks {
+    biar data: teks = muat("tugas");
+    kalau panjangTeks(data) == 0 {
+        kembali [];
+    }
+    kembali pisah(data, "\n");
+}
+
+fungsi tugas_tambah(judul: teks): kosong {
+    biar data: teks = muat("tugas");
+    kalau panjangTeks(data) == 0 {
+        simpan("tugas", judul);
+    } lain {
+        simpan("tugas", data + "\n" + judul);
+    }
+}
+
+fungsi tugas_buang(indeks: bulat): kosong {
+    biar item: []teks = tugas_semua();
+    biar baru: teks = "";
+    biar pertama: bool = benar;
+    untuk i dari 0 sampai panjang(item) {
+        kalau i != indeks {
+            kalau pertama {
+                baru = item[i];
+                pertama = salah;
+            } lain {
+                baru = baru + "\n" + item[i];
+            }
+        }
+    }
+    simpan("tugas", baru);
+}

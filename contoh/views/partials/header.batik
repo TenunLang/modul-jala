@@ -1,0 +1,4 @@
+<header>
+  <h1>{{judul}}</h1>
+  <nav><a href="/">Beranda</a> &middot; <a href="/tugas">Tugas</a></nav>
+</header>

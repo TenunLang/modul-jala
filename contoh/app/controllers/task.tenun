@@ -1,0 +1,31 @@
+// Controller Task (todo) — daftar, simpan, hapus.
+
+fungsi task_index(): teks {
+    biar item: []teks = tugas_semua();
+    biar daftar: teks = "";
+    untuk i dari 0 sampai panjang(item) {
+        daftar = daftar + "<li>" + item[i] +
+            " <a href=\"/tugas/hapus/" + keTeks(i) + "\">hapus</a></li>";
+    }
+    kalau panjangTeks(daftar) == 0 {
+        daftar = "<li><em>Belum ada tugas.</em></li>";
+    }
+    kembali jala_tampil_tata("layout", "task", peta{
+        "judul": "Daftar Tugas",
+        "daftar": daftar,
+        "galat": jala_galat_pesan("judul")
+    });
+}
+
+fungsi task_simpan(): teks {
+    kalau jala_perlu("judul") == salah {
+        kembali task_index();
+    }
+    tugas_tambah(jala_input("judul"));
+    kembali jala_redirect("/tugas");
+}
+
+fungsi task_hapus(): teks {
+    tugas_buang(keBulat(jala_param("id")));
+    kembali jala_redirect("/tugas");
+}

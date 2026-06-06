@@ -1,0 +1,75 @@
+// Permintaan — akses input + validasi sederhana (rasa Laravel).
+
+biar jala_galat: peta = peta{};
+
+// Ambil input: utamakan form (POST), lalu query string (GET).
+fungsi jala_input(nama: teks): teks {
+    biar f: teks = web_form(nama);
+    kalau panjangTeks(f) > 0 {
+        kembali f;
+    }
+    kembali web_kueri(nama);
+}
+
+fungsi jala_kueri(nama: teks): teks {
+    kembali web_kueri(nama);
+}
+fungsi jala_form(nama: teks): teks {
+    kembali web_form(nama);
+}
+fungsi jala_json_teks(kunci: teks): teks {
+    kembali web_json_teks(kunci);
+}
+fungsi jala_json_angka(kunci: teks): bulat {
+    kembali web_json_angka(kunci);
+}
+fungsi jala_header(nama: teks): teks {
+    kembali web_header(nama);
+}
+fungsi jala_metode(): teks {
+    kembali web_metode_kini();
+}
+fungsi jala_jalur(): teks {
+    kembali web_jalur_kini();
+}
+fungsi jala_badan(): teks {
+    kembali web_badan_kini();
+}
+
+// ---- Validasi ----
+
+// Reset kumpulan galat (dipanggil otomatis tiap request oleh jala_tangani).
+fungsi jala_reset_galat(): kosong {
+    jala_galat = peta{};
+}
+
+// Wajib diisi: tandai galat bila input kosong. Kembalikan benar bila valid.
+fungsi jala_perlu(nama: teks): bool {
+    kalau panjangTeks(jala_input(nama)) == 0 {
+        jala_galat[nama] = "Kolom " + nama + " wajib diisi.";
+        kembali salah;
+    }
+    kembali benar;
+}
+
+// Panjang minimum.
+fungsi jala_minimal(nama: teks, n: bulat): bool {
+    kalau panjangTeks(jala_input(nama)) < n {
+        jala_galat[nama] = "Kolom " + nama + " minimal " + keTeks(n) + " karakter.";
+        kembali salah;
+    }
+    kembali benar;
+}
+
+// True bila ada galat validasi.
+fungsi jala_ada_galat(): bool {
+    kembali panjang(petaKunci(jala_galat)) > 0;
+}
+
+// Pesan galat untuk sebuah kolom ("" bila tidak ada).
+fungsi jala_galat_pesan(nama: teks): teks {
+    kalau petaPunya(jala_galat, nama) {
+        kembali jala_galat[nama];
+    }
+    kembali "";
+}

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{judul}}</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  {{> partials/header}}
+  <main>{{konten}}</main>
+  <footer>Dibuat dengan <strong>Jala</strong> &mdash; kerangka web MVC Tenun.</footer>
+</body>
+</html>

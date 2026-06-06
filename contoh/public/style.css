@@ -1,0 +1,14 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+header h1 { margin-bottom: .2rem; }
+nav a { color: #0a7; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+main { margin: 1.5rem 0; }
+.form-tugas { display: flex; gap: .5rem; }
+.form-tugas input { flex: 1; padding: .5rem; border: 1px solid #ccc; border-radius: 6px; }
+.form-tugas button { padding: .5rem 1rem; border: 0; border-radius: 6px; background: #0a7; color: #fff; cursor: pointer; }
+.daftar-tugas { list-style: none; padding: 0; }
+.daftar-tugas li { padding: .5rem .75rem; border: 1px solid #eee; border-radius: 6px; margin-bottom: .4rem; display: flex; justify-content: space-between; }
+.daftar-tugas a { color: #c33; text-decoration: none; font-size: .85rem; }
+.galat { color: #c33; min-height: 1.2rem; }
+footer { margin-top: 2rem; color: #888; font-size: .85rem; }

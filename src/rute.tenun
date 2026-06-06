@@ -1,0 +1,50 @@
+// Rute — pendaftaran rute + grup berprefiks + rute bernama.
+// Dibangun di atas modul web (web_rute_daftar / web_param / web_redirect).
+
+biar jala_prefix: teks = "";
+biar jala_nama_rute: peta = peta{};
+
+// Daftarkan rute mentah (jarang dipakai langsung).
+fungsi jala_rute(metode: teks, pola: teks, handler: fungsi): kosong {
+    web_rute_daftar(metode, jala_prefix + pola, handler);
+}
+
+fungsi jala_get(pola: teks, handler: fungsi): kosong {
+    jala_rute("GET", pola, handler);
+}
+fungsi jala_post(pola: teks, handler: fungsi): kosong {
+    jala_rute("POST", pola, handler);
+}
+fungsi jala_put(pola: teks, handler: fungsi): kosong {
+    jala_rute("PUT", pola, handler);
+}
+fungsi jala_hapus(pola: teks, handler: fungsi): kosong {
+    jala_rute("DELETE", pola, handler);
+}
+fungsi jala_patch(pola: teks, handler: fungsi): kosong {
+    jala_rute("PATCH", pola, handler);
+}
+
+// Grup rute berprefiks. `daftar` adalah fungsi yang mendaftarkan rute di dalamnya.
+//   jala_grup("/admin", daftar_admin);  -> semua rute di daftar_admin diawali /admin
+fungsi jala_grup(prefix: teks, daftar: fungsi): kosong {
+    biar lama: teks = jala_prefix;
+    jala_prefix = lama + prefix;
+    daftar();
+    jala_prefix = lama;
+}
+
+// Rute bernama: simpan nama -> pola, lalu bangun URL via jala_url.
+fungsi jala_namai(nama: teks, pola: teks): kosong {
+    jala_nama_rute[nama] = jala_prefix + pola;
+}
+
+// URL dari rute bernama. Ganti :param dengan nilai bila diberikan (lewat ganti manual).
+fungsi jala_url(nama: teks): teks {
+    kembali jala_nama_rute[nama];
+}
+
+// Parameter rute (mis. "/pos/:id" -> jala_param("id")).
+fungsi jala_param(nama: teks): teks {
+    kembali web_param(nama);
+}

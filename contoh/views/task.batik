@@ -1,0 +1,6 @@
+<form method="post" action="/tugas" class="form-tugas">
+  <input name="judul" placeholder="Tugas baru..." autofocus>
+  <button type="submit">Tambah</button>
+</form>
+{{#jika galat}}<p class="galat">{{galat}}</p>{{/jika galat}}
+<ul class="daftar-tugas">{{daftar}}</ul>
