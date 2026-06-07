@@ -1,0 +1,3 @@
+impor "../src/jala.tenun";
+tegas(panjangTeks(jala_csrf_baru("sesi1")) > 0, "csrf token tak kosong");
+tegas(cari(jala_csrf_field("sesi1"), "input") >= 0, "csrf field berupa input");
