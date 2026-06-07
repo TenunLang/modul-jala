@@ -19,4 +19,5 @@ jobs:
           git clone --depth 1 https://github.com/TenunLang/modul-tampilan tenun_modul/tampilan
           git clone --depth 1 https://github.com/TenunLang/modul-auth tenun_modul/auth
       - name: Uji unit
-        run: "$HOME/.tenun/bin/tenun" check .
+        run: |
+          "$HOME/.tenun/bin/tenun" check .
